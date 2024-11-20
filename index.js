@@ -7,7 +7,7 @@ let id;
 // const pos = [80, 2.64, 2];
 const pos = [80, 4, 2];
 const rot = [0, -0.7, 0, 0.5];
-const location = "United Kingdom";
+const location = ":3 >>> https://github.com/Lyall-A/Porter-Robinson-Game :D";
 const maxInRoom = 10;
 const track = 1; // 0: idk, 1: knock yourself out, 2: cat
 
@@ -65,7 +65,7 @@ connectWS("wss://s.dreamwave.network/arptree/ws", true, (url, socket) => {
     const event = json._evt;
 
     if (event) {
-        console.log(`Received event: ${event}`);
+        // console.log(`Received event: ${event}`);
         if (event === "findAny_response") {
             serverId = json.id;
             console.log(`Received findAny response, Server ID: ${serverId}`);
@@ -82,7 +82,7 @@ connectWS("wss://s.dreamwave.network/arptree/ws", true, (url, socket) => {
         } else
         if (event === "join_response") {
             id = json.myID;
-            console.log(`Received join response, ${json.success ? "success!" : "failure :("}, host: ${json.host ? "yes" : "no"}, ID: ${id}, players: ${json.players.map(i => `${i.id} from ${i.data.location}`).join(", ")}`);
+            console.log(`Received join response, ${json.success ? "success!" : "failure :(,"} host: ${json.host ? "yes" : "no"}, ID: ${id}, players: ${json.players.map(i => `${i.id} from ${i.data.location}`).join(", ")}`);
             // socket.json({ _evt: "request_state" });
         } else
         if (event === "become_host") {
@@ -90,6 +90,9 @@ connectWS("wss://s.dreamwave.network/arptree/ws", true, (url, socket) => {
         } else
         if (event === "player_disconnect") {
             console.log(`Player ${json.gcID} disconnectd`);
+        } else
+        if (event === "open_connection") {
+            console.log(`Player ${json.gcID} connected from ${json.data.location}`);
         }
         else {
             console.log(`Unknown event '${event}':`, json);
