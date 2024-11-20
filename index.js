@@ -37,7 +37,6 @@ connectWS("wss://s.dreamwave.network/arptree/ws", true, (url, socket) => {
             circle.angle += Math.PI / circle.steps;
             if (circle.angle >= Math.PI * 2) circle.angle = 0;
         }
-        // pos[1] += 0.03;
         socket.send(`binary:${JSON.stringify({
                 events: [],
                 from: id,
