@@ -9,10 +9,14 @@ const pos = [80, 4, 2];
 const rot = [0, -0.7, 0, 0.5];
 const location = ":3 >>> https://github.com/Lyall-A/Porter-Robinson-Game :D";
 const maxInRoom = 10;
-const track = 1; // 0: idk, 1: knock yourself out, 2: cat
+const track = 2; // 0: idk, 1: knock yourself out, 2: cat
 
-const circle = { centerX: 55, centerZ: 0, radius: 5, angle: 0, steps: 10 }; // run in circles
-// const circle = false; // run in circles
+// fun stuff
+const circle = { centerX: 55, centerZ: 0, radius: 3, angle: 0, steps: 6 }; // run in circles
+// const circle = false;
+const circleFollow = true; // use circle, but centerX and centerY is of other players
+const follow = { offsetPos1: 1.5 }; // follow players
+// const follow = false; // follow players
 
 connectWS("wss://s.dreamwave.network/arptree/ws", true, (url, socket) => {
     connectDate = Date.now();
@@ -58,6 +62,26 @@ connectWS("wss://s.dreamwave.network/arptree/ws", true, (url, socket) => {
     if (json instanceof Array) {
         for (const item of json) {
             // console.log(`${item.from} is at position: ${item.objects.character.p[0]}, ${item.objects.character.p[1]}, ${item.objects.character.p[2]}, rotation: ${item.objects.character.q[0]}, ${item.objects.character.q[1]}, ${item.objects.character.q[2]}, ${item.objects.character.q[3]}`);
+            if (item.from !== id) {
+                if (circleFollow) {
+                    circle.centerX = item.objects.character.p[0];
+                    pos[1] = item.objects.character.p[1] + (follow.offsetPos1 || 0);
+                    circle.centerZ = item.objects.character.p[2];
+                    rot[0] = item.objects.character.q[0] + (follow.offsetRot0 || 0);
+                    rot[1] = item.objects.character.q[1] + (follow.offsetRot1 || 0);
+                    rot[2] = item.objects.character.q[2] + (follow.offsetRot2 || 0);
+                    rot[3] = item.objects.character.q[3] + (follow.offsetRot3 || 0);
+                } else
+                if (follow) {
+                    pos[0] = item.objects.character.p[0] + (follow.offsetPos0 || 0);
+                    pos[1] = item.objects.character.p[1] + (follow.offsetPos1 || 0);
+                    pos[2] = item.objects.character.p[2] + (follow.offsetPos2 || 0);
+                    rot[0] = item.objects.character.q[0] + (follow.offsetRot0 || 0);
+                    rot[1] = item.objects.character.q[1] + (follow.offsetRot1 || 0);
+                    rot[2] = item.objects.character.q[2] + (follow.offsetRot2 || 0);
+                    rot[3] = item.objects.character.q[3] + (follow.offsetRot3 || 0);
+                }
+            }
         }
         return;
     }
