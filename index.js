@@ -53,7 +53,7 @@ connectWS("wss://s.dreamwave.network/arptree/ws", true, (url, socket) => {
                 },
                 pS: "d"
         })}`);
-    }, 100);
+    }, 50);
 }, (json, socket, rawMsg) => {
     // if (rawMsg.toString() === "pong") return console.log(`Received pong`);
     if (!json) return;
