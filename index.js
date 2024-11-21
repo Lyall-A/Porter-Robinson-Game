@@ -158,7 +158,7 @@ function start() {
                 console.log(`Received join response: ${event.success ? "success!" : "failure :("}`);
                 console.log(`Host (what does this do?): ${event.host ? "yes :)" : "no :("}`);
                 console.log(`ID: ${id}`);
-                console.log(`Players: ${event.players.map(i => `${i.id} from ${i.data.location}`).join(", ")}`);
+                console.log(`Players (${event.players.length}): ${event.players.map(i => `${i.id}${i.id === id ? " (me)" : ""} from ${i.data.location}`).join(", ")}`);
                 // socket.sendJson({ _evt: "request_state" }); // returns a pin and rebroadcast_players event
             } else
                 // fuck you formatter
