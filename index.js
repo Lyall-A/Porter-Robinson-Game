@@ -113,7 +113,7 @@ connectWS("wss://s.dreamwave.network/arptree/ws", true, (url, socket) => {
             console.log("Became host");
         } else
         if (event === "player_disconnect") {
-            console.log(`Player ${json.gcID} disconnectd`);
+            console.log(`Player ${json.gcID} disconnected`);
         } else
         if (event === "open_connection") {
             console.log(`Player ${json.gcID} connected from ${json.data.location}`);
